@@ -14,9 +14,9 @@ struct Card {
     var isMatched = false
     var identifier: Int
     
-    static var identidierFactory = 0
+    private static var identidierFactory = 0
     
-    static func getUniqueIdentifier() -> Int {
+    private static func getUniqueIdentifier() -> Int {
         identidierFactory += 1
         return identidierFactory
     }

@@ -30,6 +30,16 @@ class ViewController: UIViewController {
         flipCountLabel.attributedText = attributedString
     }
     
+    @IBAction func newGame(_ sender: UIButton) {
+        flipCount = 0
+        emojiChoices = "👻🎃🦇😱🙀😈🍭🍬🍎"
+        game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
+        updateViewFromModel()
+    }
+    
+    
+    @IBOutlet weak var newGameButton: UIButton!
+    
     @IBOutlet private weak var flipCountLabel: UILabel! {
         didSet {
             updateFlipCountLabel()

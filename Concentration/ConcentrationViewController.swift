@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ConcentrationViewController: UIViewController {
     
     private lazy var game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
 
@@ -24,7 +24,7 @@ class ViewController: UIViewController {
     private func updateFlipCountLabel() {
         let attributes: [NSAttributedString.Key: Any] = [
             .strokeWidth : 5.0,
-            .strokeColor : UIColor.orange
+            .strokeColor : UIColor.black
         ]
         let attributedString = NSAttributedString(string: "Flips: \(flipCount)", attributes: attributes)
         flipCountLabel.attributedText = attributedString
@@ -32,11 +32,10 @@ class ViewController: UIViewController {
     
     @IBAction func newGame(_ sender: UIButton) {
         flipCount = 0
-        emojiChoices = "👻🎃🦇😱🙀😈🍭🍬🍎"
+        emojiChoices = theme ?? ""
         game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
         updateViewFromModel()
     }
-    
     
     @IBOutlet weak var newGameButton: UIButton!
     
@@ -59,16 +58,26 @@ class ViewController: UIViewController {
     }
     
     private func updateViewFromModel() {
+        if cardButton != nil {
         for index in cardButton.indices {
             let button = cardButton[index]
             let card = game.cards[index]
             if card.isFaceUp {
                 button.setTitle(emoji(for: card), for: UIControl.State.normal)
-                button.backgroundColor = UIColor.white
+                button.backgroundColor = UIColor.lightGray
             } else {
                 button.setTitle("", for: UIControl.State.normal)
-                button.backgroundColor = card.isMatched ? UIColor.clear : UIColor.orange
+                button.backgroundColor = card.isMatched ? UIColor.clear : UIColor.systemBlue
             }
+        }
+    }
+    }
+    
+    var theme: String? {
+        didSet {
+            emojiChoices = theme ?? ""
+            emoji = [:]
+            updateViewFromModel()
         }
     }
     
